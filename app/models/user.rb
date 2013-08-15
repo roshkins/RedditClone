@@ -4,6 +4,12 @@ class User < ActiveRecord::Base
 
   validates :username, :password_digest, :presence => true
 
+  has_many :subs, :class_name => "Sub",  :primary_key => :id,
+             :foreign_key => :moderator_id
+
+  has_many :links, :class_name => "Link", :primary_key => :id,
+           :foreign_key => :submitter_id
+
   def password=(plaintext)
     unless plaintext.blank? || plaintext.length < 6
       self.password_digest = BCrypt::Password.create(plaintext)

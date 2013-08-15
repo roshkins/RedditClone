@@ -1,0 +1,26 @@
+<form action="<%= link.new_record? ? links_url : link_url(link) %>"
+	 method="post" accept-charset="utf-8">
+	<input type="hidden" name="authenticity_token"
+	value="<%= form_authenticity_token %>" id="authenticity_token">
+	<% unless link.new_record? %>
+	<input type="hidden" name="_method" value="put" id="_method">
+	<% end %>
+	<label for="link_title">Title</label>
+	<input type="text" name="link[title]" value="<%= link.title %>"
+	 id="link_title">
+	<br>
+	<label for="link_url">Url</label>
+	<input type="text" name="link[url]" value="<%= link.url %>" id="link_url">
+	<br>
+	<label for="link_text">Text (optional)</label><br>
+	<textarea name="link[text]" id="link_text" rows="8" cols="40"></textarea>
+	<br>
+	<input type="hidden" name="[subs][]" value="">
+	<% subs.each do |sub| %>
+<input type="checkbox" name="[subs][]" value="<%= sub.id %>"
+ id="subs_<%= sub.id %>" <%= "checked" if link.subs &&
+ link.subs.include?(sub.id) %> >	<label for="subs_<%= sub.id %>"><%=
+	  sub.name %></label><br>
+	<% end %>
+	<p><input type="submit" value="Create Link"></p>
+</form>

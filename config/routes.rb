@@ -4,4 +4,6 @@ RedditApp::Application.routes.draw do
   resources :users, :only  => [:new, :create]
 
   resources :subs
+
+  resources :links
 end

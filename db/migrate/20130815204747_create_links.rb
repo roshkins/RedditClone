@@ -4,6 +4,7 @@ class CreateLinks < ActiveRecord::Migration
       t.string :title, :null => false
       t.string :url, :null => false
       t.text :text
+      t.integer :submitter_id
 
       t.timestamps
     end

@@ -14,9 +14,12 @@ Notice: <%= flash[:notice] %>
 
 <div>
 <% if logged_in? %>
+Hi <%= current_user.username %>
 	<%= button_to "Log Out", session_url, :method => :delete %>
+<%= link_to "New Sub", new_sub_url %> <%= link_to "New Link", new_link_url %>
+<%= link_to "Your Links", links_url %>
 <% end %> <%= link_to "Log In", new_session_url unless logged_in? %>
-<%= link_to "New Sub", new_sub_url %>
+
 </div>
 <hr>
 <%= yield %>

@@ -13,13 +13,15 @@
  <input type="text" name="sub[name]" value="<%= sub.name %>" id="sub_name">
  <br>
  <br>
- <% links.each do |link| %>
- <label for="link_title">link_title</label>
- <input type="text" name="link[title]" value="<%= link.title %>" id="link_title"><br>
- <label for="link_url">Url</label>
- <input type="text" name="link[url]" value="<%= link.url %>" id="link_url"><br>
- <label id="link_text">Text (optional)</label>
- <textarea name="link[text]" id="link_text" rows="10" cols="40"><%= link.text %></textarea>
+ <% links.each_with_index do |link, idx| %>
+ <% link_id_prefix = "links_#{idx}" %>
+ <% link_name_prefix = "links[#{idx}]" %>
+ <label for="<%= link_id_prefix %>_title">Link Title</label>
+ <input type="text" name="<%= link_name_prefix %>[title]" value="<%= link.title %>" id="<%= link_id_prefix %>_title"><br>
+ <label for="<%= link_id_prefix %>_url">Url</label>
+ <input type="text" name="<%= link_name_prefix %>[url]" value="<%= link.url %>" id="<%= link_id_prefix %>_url"><br>
+ <label id="<%= link_id_prefix %>_text">Text (optional)</label><br>
+ <textarea name="<%= link_name_prefix %>[text]" id="<%= link_id_prefix %>_text" rows="10" cols="40"><%= link.text %></textarea>
  <br>
  <br>
  <% end %>

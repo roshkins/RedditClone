@@ -8,13 +8,27 @@ class SubsController < ApplicationController
 
   def create
     @sub = Sub.new(params[:sub])
-    if @sub.save
-      flash[:notice] = "Successfully created sub!"
-      redirect_to sub_url(@sub)
-    else
-      flash[:notice] = "Something went wrong." +
-                       " #{@sub.errors.full_messages *" ,"}"
-      render :new
+    @sub.moderator_id = current_user.id
+    @links = params[:links].map do |_, link|
+      next if link.values.all?(&:blank?)
+      Link.new(link)
+    end.compact
+
+    begin
+      ActiveRecord::Base.transaction do
+        @sub.save!
+        @links.map! { |link| link.id = @sub.id; link.save! }
+      end
+        flash[:notice] = "Successfully created sub!"
+        redirect_to sub_url(@sub)
+    rescue
+        flash.now[:notice] = "Something went wrong." +
+                         " #{@sub.errors.full_messages * " ," if @sub}"  +
+                         (@links ? @links.map do |link|
+                           next if link.nil?
+                           link.errors.full_messages * ", "
+                          end * ", " : "")
+        render :new
     end
   end
 

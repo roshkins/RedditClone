@@ -1,5 +1,7 @@
 RedditApp::Application.routes.draw do
-  resource :session
+  resource :session, :only => [:new,:destroy, :create ]
 
-  resources :users
+  resources :users, :only  => [:new, :create]
+
+  resources :subs
 end

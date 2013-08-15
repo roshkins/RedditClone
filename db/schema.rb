@@ -11,7 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130815174627) do
+ActiveRecord::Schema.define(:version => 20130815204747) do
+
+  create_table "links", :force => true do |t|
+    t.string   "title",      :null => false
+    t.string   "url",        :null => false
+    t.text     "text"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "subs", :force => true do |t|
+    t.string   "name",         :null => false
+    t.integer  "moderator_id", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "subs", ["moderator_id"], :name => "index_subs_on_moderator_id"
 
   create_table "users", :force => true do |t|
     t.string   "username",        :null => false

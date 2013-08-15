@@ -1,6 +1,6 @@
 require 'bcrypt'
 class User < ActiveRecord::Base
-  attr_accessible :password_digest, :username, :password
+  attr_accessible :password_digest, :username, :password, :session_token
 
   validates :username, :password_digest, :presence => true
 
@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
       self.password_digest = BCrypt::Password.create(plaintext)
     else
       self.errors.add(:password,
-       "Must be 6 or more characters long and not blank.")
+       "must be 6 or more characters long and not blank.")
        self.password_digest = nil
     end
   end
@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
   end
 
   def create_session_token!
-    SecureRandom.urlsafe_base64
+    self.session_token = SecureRandom.urlsafe_base64
+    self.save!
+    self.session_token
   end
 end

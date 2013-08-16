@@ -10,8 +10,14 @@ class Link < ActiveRecord::Base
   has_many :comments, :class_name => "Comment", :primary_key => :id,
            :foreign_key => :link_id
 
+  has_many :votes, :class_name => "LinkVote"
+
   belongs_to :submitter, :class_name => "User", :primary_key => :id,
   :foreign_key => :submitter_id
+
+  def vote_count
+    self.votes.where(:upvote => true).count - self.votes.where(:upvote => false).count
+  end
 
   def comments_by_parent
     comments_hash = {}

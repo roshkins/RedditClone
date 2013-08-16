@@ -1,6 +1,6 @@
 <li><% if comment %>
 
-<b><%= comment.author.username %> Said: </b><br>
+<b><%= comment.author.username %> said <%= time_ago_in_words(comment.created_at) %> ago: </b><br>
 <p><%= comment.body %> </p>
 
 <%= render :partial => "comment_form", :locals => {:parent_comment_id => (comment.id if comment) || "", :comment => @comment} %>

@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   has_many :comments, :class_name => "Comment", :primary_key => :id,
            :foreign_key => :author_id
 
+  has_many :votes, :class_name => "LinkVote"
+
   def password=(plaintext)
     unless plaintext.blank? || plaintext.length < 6
       self.password_digest = BCrypt::Password.create(plaintext)
@@ -32,4 +34,24 @@ class User < ActiveRecord::Base
     self.save!
     self.session_token
   end
+
+  def vote(link_vote)
+    unless self.votes.find_by_user_id_and_link_id(link_vote.user_id,
+           link_vote.link_id)
+      self.votes << link_vote
+      link_vote.save!
+      self.save!
+    else
+      old_link_vote = self.votes.find_by_link_id(link_vote.link_id)
+      if old_link_vote && old_link_vote.upvote == link_vote.upvote
+        old_link_vote.destroy
+      else
+        old_link_vote.destroy
+        self.votes << link_vote
+        self.save!
+        link_vote.save!
+      end
+    end
+  end
+
 end

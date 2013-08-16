@@ -1,4 +1,6 @@
-<h1 id=""><%= link_to @link.title, @link.url, :target => "_blank" %></h1>
+<%= button_to "Upvote", link_upvote_url(@link)  %>
+<%= button_to "Downvote", link_downvote_url(@link)  %>
+<h1 id="">Votes: <%= @link.vote_count %> <%= link_to @link.title, @link.url, :target => "_blank" %></h1>
 <p><%= @link.text %></p>
 <h2>Comments:</h2>
 

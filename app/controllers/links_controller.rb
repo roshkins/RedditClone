@@ -49,4 +49,20 @@ class LinksController < ApplicationController
   def index
     @links = current_user.links.all
   end
+
+  def upvote
+    @link = Link.find(params[:link_id])
+    lv = LinkVote.new(:link_id => @link.id,
+    :user_id => current_user.id, :upvote =>  true)
+    current_user.vote(lv)
+    redirect_to link_url(@link)
+  end
+
+  def downvote
+    @link = Link.find(params[:link_id])
+    lv = LinkVote.new(:link_id => @link.id,
+    :user_id => current_user.id, :upvote =>  false)
+    current_user.vote(lv)
+    redirect_to link_url(@link)
+  end
 end

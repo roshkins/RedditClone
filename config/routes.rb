@@ -7,8 +7,8 @@ RedditApp::Application.routes.draw do
 
   resources :links do
     resources :comments, :except => [:show, :edit, :index]
-    post "upvote", :action => "Link#upvote"
-    post "downvote", :action => "Link#downvote"
+    post "upvote", :method => "Link#upvote"
+    post "downvote", :method => "Link#downvote"
   end
 
 end

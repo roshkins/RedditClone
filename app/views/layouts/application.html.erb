@@ -16,8 +16,11 @@ Notice: <%= flash[:notice] %>
 <% if logged_in? %>
 Hi <%= current_user.username %>
 	<%= button_to "Log Out", session_url, :method => :delete %>
-<%= link_to "New Sub", new_sub_url %> <%= link_to "New Link", new_link_url %>
-<%= link_to "Your Links", links_url %>
+
+ <%	[["New Sub", new_sub_url], ["New Link", new_link_url], ["Your Links", links_url], ["Homepage", subs_url]].each do |title, url| %>
+ <%= link_to title, url %>
+ <% end %>
+
 <% end %> <%= link_to "Log In", new_session_url unless logged_in? %>
 
 </div>

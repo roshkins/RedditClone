@@ -1,9 +1,9 @@
-<form action="<%= comments_url %>" method="post" accept-charset="utf-8">
+<form action="<%= link_comments_url(@link) %>" method="post" accept-charset="utf-8">
 	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-	<input type="hidden" name="parent_comment_id" value="<%= parent_comment_id %>" id="parent_comment_id">
+	<input type="hidden" name="parent_comment_id" value="<%= (parent_comment_id || "") %>" id="parent_comment_id">
 
 	<label for="comment_body">Body of Post</label><br>
-	<textarea name="comment[body]" id="comment_body" rows="8" cols="40"><%= comment && comment.body %></textarea>
+	<textarea name="comment[body]" id="comment_body" rows="8" cols="40"><%=  (comment.body if comment) %></textarea>
 
 	<p><input type="submit" value="Comment!"></p>
 </form>

@@ -1,5 +1,5 @@
 class LinksController < ApplicationController
-
+  before_filter :make_sure_logged_in
   def new
     @link = Link.new
     @subs = Sub.all

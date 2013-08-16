@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
   def new
     @user = User.new
-    render :new
+    unless current_user
+      render :new
+    else
+      redirect_to links_url
+    end
   end
 
   def create

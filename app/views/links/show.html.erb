@@ -1,5 +1,8 @@
 <h1 id=""><%= link_to @link.title, @link.url, :target => "_blank" %></h1>
 <p><%= @link.text %></p>
 <h2>Comments:</h2>
+
+<%= render partial: "comment_form", :locals => {:comment => nil, :parent_comment_id => nil}  %>
+
 <%= render partial: "comment",
  		locals: {:comment =>  nil, :comments_by_parent => @link.comments_by_parent}  %>

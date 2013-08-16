@@ -1,23 +1,24 @@
 <li><% if comment %>
 
-<b><%= comment.author %> Said: </b><br>
+<b><%= comment.author.username %> Said: </b><br>
 <p><%= comment.body %> </p>
 
+<%= render :partial => "comment_form", :locals => {:parent_comment_id => (comment.id if comment) || "", :comment => @comment} %>
 <% end %></li>
 
 
 <% if comments_by_parent %>
 		<ul>
-			<% comments_by_parent.each do |parent_comment_id, comments| %>
 
-						<% comments && comments.each do |comment| %>
+			<% comments = comments_by_parent[(comment && comment.id).to_s || ""] %>
+
+						<% comments.each do |comment_inner| %>
+
 								<%= render partial: "comment",
-	 							locals: {:comment =>  comment,
-								:comments_by_parent => comments_by_parent} \
-								if comment.parent_comment_id == parent_comment_id  %>
-						<% end %>
-						<%= render :partial => "comment_form", :locals => {:parent_comment_id => parent_comment_id, :comment => @comment} %>
-			<% end %>
+	 							locals: {:comment =>  comment_inner,
+								:comments_by_parent => comments_by_parent}  %>
+
+			<% end if comments %>
 		</ul>
 
 <% end %>

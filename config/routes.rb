@@ -5,7 +5,10 @@ RedditApp::Application.routes.draw do
 
   resources :subs
 
-  resources :links
+  resources :links do
+    resources :comments, :except => [:show, :edit, :index]
+    post "upvote", :action => "Link#upvote"
+    post "downvote", :action => "Link#downvote"
+  end
 
-  resources :comments, :except => [:show, :edit, :index]
 end

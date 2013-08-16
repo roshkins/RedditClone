@@ -6,4 +6,6 @@ RedditApp::Application.routes.draw do
   resources :subs
 
   resources :links
+
+  resources :comments, :except => [:show, :edit, :index]
 end

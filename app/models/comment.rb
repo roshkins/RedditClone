@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-  attr_accessible :author_id, :link_id, :parent_comment_id
+  attr_accessible :author_id, :link_id, :parent_comment_id, :body
 
   belongs_to :author, :class_name => "User", :primary_key => :id,
              :foreign_key => :author_id
@@ -12,6 +12,4 @@ class Comment < ActiveRecord::Base
 
   has_many :child_comments, :class_name => "Comment", :primary_key => :id,
            :foreign_key => :parent_comment_id
-
-
 end

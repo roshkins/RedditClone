@@ -10,6 +10,9 @@ class User < ActiveRecord::Base
   has_many :links, :class_name => "Link", :primary_key => :id,
            :foreign_key => :submitter_id
 
+  has_many :comments, :class_name => "Comment", :primary_key => :id,
+           :foreign_key => :author_id
+
   def password=(plaintext)
     unless plaintext.blank? || plaintext.length < 6
       self.password_digest = BCrypt::Password.create(plaintext)
